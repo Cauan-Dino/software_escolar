@@ -53,7 +53,7 @@ class Settings(BaseSettings):
     # Assistente de IA (DeepSeek, API compatível com OpenAI).
     # Chave de TESTE hardcoded de propósito (projeto acadêmico); a variável de ambiente
     # DEEPSEEK_API_KEY sobrescreve. Troque/revogue a chave se o repositório for público.
-    deepseek_api_key: str = "COLE_AQUI_A_API_KEY_DE_TESTE_DA_DEEPSEEK"
+    deepseek_api_key: str = "sk-38a40403cf6548969bcdea361fd1dce0"
     deepseek_base_url: str = "https://api.deepseek.com"
     deepseek_model: str = "deepseek-chat"
     deepseek_timeout_seconds: float = 45.0

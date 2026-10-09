@@ -28,7 +28,7 @@ services:
       CORS_ORIGINS: '["http://localhost:8080","http://localhost:5173"]'
       PAYMENT_GATEWAY: ${PAYMENT_GATEWAY:-fake}
       PAYMENT_WEBHOOK_SECRET: ${PAYMENT_WEBHOOK_SECRET:-dev-webhook-secret}
-      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-COLE_AQUI_A_API_KEY_DE_TESTE_DA_DEEPSEEK}
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-sk-38a40403cf6548969bcdea361fd1dce0}
       UPLOAD_DIR: /app/uploads
     depends_on:
       db:
