@@ -1,0 +1,383 @@
+<title>Semeando — Apresentação</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Layout: deck vertical; cada slide é uma seção larga com diagrama em CSS. Verde de semente + terra. */
+:root{
+  --bg:#f2f6f1; --surface:#ffffff; --surface2:#e6eee4; --fg:#15221a; --muted:#52645a;
+  --line:#c9d6c7; --accent:#2a7a4b; --accent-ink:#ffffff; --seed:#b7791f; --seed-bg:#f6ead0;
+  --warn:#a63d2a; --warn-bg:#f6dcd6; --code-bg:#14211a; --code-fg:#dfeedd;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1812; --surface:#17241c; --surface2:#1e2f24; --fg:#e6efe5; --muted:#9bb0a2;
+    --line:#2b4033; --accent:#5ec489; --accent-ink:#0b1a11; --seed:#e0b45a; --seed-bg:#3a2f15;
+    --warn:#ef9a86; --warn-bg:#3d211b; --code-bg:#0a110d; --code-fg:#dfeedd; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1812; --surface:#17241c; --surface2:#1e2f24; --fg:#e6efe5; --muted:#9bb0a2;
+  --line:#2b4033; --accent:#5ec489; --accent-ink:#0b1a11; --seed:#e0b45a; --seed-bg:#3a2f15;
+  --warn:#ef9a86; --warn-bg:#3d211b; --code-bg:#0a110d; --code-fg:#dfeedd; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.55;padding-inline:16px}
+h1,h2,h3{font-family:var(--display);line-height:1.1;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.4rem,6vw,4.2rem);font-weight:700;letter-spacing:-.02em}
+h2{font-size:clamp(1.7rem,3.6vw,2.5rem);font-weight:700;letter-spacing:-.01em}
+h3{font-size:1.15rem;font-weight:600}
+p{margin:0}
+code,.mono{font-family:var(--mono);font-size:.88em}
+.wrap{max-width:1100px;margin-inline:auto}
+nav.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);margin-inline:-16px;padding:8px 16px}
+nav.top .wrap{display:flex;gap:6px;overflow-x:auto;align-items:center}
+nav.top a{white-space:nowrap;font-size:.82rem;color:var(--muted);text-decoration:none;padding:5px 10px;border-radius:6px}
+nav.top a:hover,nav.top a:focus-visible{background:var(--surface2);color:var(--fg);outline:none}
+.slide{padding-block:56px;border-bottom:1px solid var(--line)}
+.slide:last-of-type{border-bottom:0}
+.eyebrow{font-family:var(--mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.lead{font-size:1.15rem;color:var(--muted);max-width:62ch;margin-top:14px}
+.stack{display:flex;flex-direction:column;gap:28px}
+.head{display:flex;flex-direction:column;gap:6px;max-width:72ch}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr))}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;min-width:0}
+.box h3{margin-bottom:6px}
+.box p,.box li{color:var(--muted);font-size:.95rem}
+.box ul{margin:6px 0 0;padding-left:18px}
+.box.hl{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+.box.seed{background:var(--seed-bg);border-color:var(--seed)}
+.box.warn{background:var(--warn-bg);border-color:var(--warn)}
+.stat{font-family:var(--display);font-size:2.6rem;font-weight:700;color:var(--accent);line-height:1}
+.statl{color:var(--muted);font-size:.9rem;margin-top:6px}
+.tag{display:inline-block;font-family:var(--mono);font-size:.74rem;padding:2px 8px;border-radius:99px;background:var(--surface2);color:var(--fg);border:1px solid var(--line)}
+.tag.ok{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.tag.seed{background:var(--seed-bg);border-color:var(--seed);color:var(--seed)}
+.flow{display:flex;align-items:stretch;gap:10px;flex-wrap:wrap}
+.flow .box{flex:1 1 150px}
+.flow .arr{align-self:center;color:var(--accent);font-family:var(--mono);font-weight:500}
+.layers{display:flex;flex-direction:column;gap:8px}
+.layer{display:grid;grid-template-columns:150px 1fr;gap:14px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 16px}
+.layer b{font-family:var(--mono);font-size:.9rem;color:var(--accent)}
+.layer span{color:var(--muted);font-size:.93rem}
+@media (max-width:560px){.layer{grid-template-columns:1fr;gap:2px}}
+pre{background:var(--code-bg);color:var(--code-fg);border-radius:10px;padding:16px;overflow-x:auto;margin:0;font-family:var(--mono);font-size:.82rem;line-height:1.55}
+pre .c{color:#7fa08a}
+pre .k{color:#e0b45a}
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;counter-reset:s}
+.steps li{counter-reset:none;display:grid;grid-template-columns:34px 1fr;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;counter-increment:s}
+.steps li::before{content:counter(s);font-family:var(--display);font-weight:700;width:30px;height:30px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center}
+.steps li div{min-width:0}
+.steps strong{display:block}
+.steps span{color:var(--muted);font-size:.94rem}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.92rem}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.cover{padding-block:72px 56px}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
+.cols2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:16px}
+.cols2>*{min-width:0}
+.note{color:var(--muted);font-size:.9rem}
+.theme{margin-left:auto;font:inherit;font-size:.82rem;background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:4px 10px;cursor:pointer}
+.theme:hover{color:var(--fg)}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+</style>
+
+<nav class="top"><div class="wrap">
+  <a href="#capa">Início</a><a href="#visao">Visão geral</a><a href="#arq">Arquitetura</a><a href="#camadas">Camadas</a>
+  <a href="#fluxo">Funcionamento</a><a href="#poo">Orientação a objetos</a><a href="#ia">IA</a><a href="#tools">Tool calling</a>
+  <a href="#seg">Segurança da IA</a><a href="#deploy">Produção</a><a href="#fim">Próximos passos</a>
+  <button class="theme" id="themeBtn" type="button">Tema</button>
+</div></nav>
+
+<main class="wrap">
+
+<section class="slide cover" id="capa">
+  <div class="eyebrow">Programação Orientada a Objetos</div>
+  <h1>Semeando</h1>
+  <p class="lead">Sistema de gestão escolar para educação infantil e fundamental 1: matrícula, turmas, notas, frequência, financeiro e comunicação, com um assistente de IA que executa tarefas do sistema.</p>
+  <div class="pills">
+    <span class="tag">Python 3.12 · FastAPI</span><span class="tag">SQLAlchemy 2 · PostgreSQL 16</span>
+    <span class="tag">React + Vite (4 apps)</span><span class="tag">Railway</span><span class="tag">DeepSeek · tool calling</span>
+  </div>
+</section>
+
+<section class="slide" id="visao">
+  <div class="stack">
+    <div class="head"><div class="eyebrow">Visão geral</div><h2>O que o sistema resolve</h2>
+      <p class="lead">Uma escola pequena concentra em planilhas e papel o que aqui vira um fluxo único, com cada perfil vendo só o que lhe cabe.</p></div>
+    <div class="grid g4">
+      <div class="box"><div class="stat">10</div><div class="statl">módulos de negócio (auth, pessoas, turmas, matrícula, frequência, notas, financeiro, calendário, comunicação, assistente)</div></div>
+      <div class="box"><div class="stat">4</div><div class="statl">aplicações web: painel administrativo e portais do responsável, do aluno e do professor</div></div>
+      <div class="box"><div class="stat">6</div><div class="statl">perfis de acesso: Admin, Secretaria, Financeiro, Professor, Responsável e Aluno</div></div>
+      <div class="box"><div class="stat">61</div><div class="statl">ferramentas que a IA pode usar: 26 de consulta e 35 de alteração</div></div>
+    </div>
+    <div class="grid g3">
+      <div class="box"><h3>Secretaria e direção</h3><p>Cadastra alunos, responsáveis e turmas, aprova matrículas, gera mensalidades e publica avisos.</p></div>
+      <div class="box"><h3>Professor</h3><p>Lança chamada e notas das próprias turmas, consulta calendário e comunica a turma.</p></div>
+      <div class="box"><h3>Família</h3><p>Responsável e aluno acompanham boletim, frequência, cobranças e avisos. O responsável só enxerga os próprios filhos.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="arq">
+  <div class="stack">
+    <div class="head"><div class="eyebrow">Arquitetura</div><h2>Monolito modular com 4 clientes</h2>
+      <p class="lead">Um único serviço de API e um único banco. Os limites entre módulos são explícitos, então cada módulo poderia virar serviço no futuro.</p></div>
+    <div class="flow">
+      <div class="box"><h3>Clientes (React)</h3><p>painel-admin<br>portal-responsavel<br>portal-aluno<br>portal-professor</p></div>
+      <div class="arr">HTTPS + JWT →</div>
+      <div class="box hl"><h3>API FastAPI</h3><p>/api/v1 · RBAC · auditoria · rate limit · tratamento de erros padronizado</p></div>
+      <div class="arr">SQLAlchemy →</div>
+      <div class="box"><h3>PostgreSQL 16</h3><p>migrations com Alembic; enums como VARCHAR</p></div>
+    </div>
+    <div class="flow">
+      <div class="box seed"><h3>Assistente (módulo da API)</h3><p>chama o LLM por HTTPS e executa ferramentas pelos <em>services</em> dos outros módulos</p></div>
+      <div class="arr">→</div>
+      <div class="box seed"><h3>DeepSeek</h3><p>API compatível com OpenAI (chat/completions com tools)</p></div>
+    </div>
+    <div class="grid g3">
+      <div class="box"><h3>Regra 1</h3><p>Toda regra de negócio, validação e permissão fica no back-end. O front só ajuda o usuário.</p></div>
+      <div class="box"><h3>Regra 2</h3><p>O front nunca acessa o banco: tudo passa pela API.</p></div>
+      <div class="box"><h3>Regra 3</h3><p>Fluxo obrigatório <code>router → service → repository → banco</code>, verificado por teste automático.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="camadas">
+  <div class="stack">
+    <div class="head"><div class="eyebrow">Camadas de um módulo</div><h2>Cada arquivo tem uma responsabilidade</h2>
+      <p class="lead">Todo módulo tem a mesma estrutura. Um teste de arquitetura quebra o build se alguém pular uma camada.</p></div>
+    <div class="layers">
+      <div class="layer"><b>router.py</b><span>Recebe a requisição, aplica <code>require_roles(...)</code>, chama o service e devolve um schema. Sem regra de negócio.</span></div>
+      <div class="layer"><b>permissions.py</b><span>Quem pode o quê no módulo, como tuplas de perfis reutilizáveis.</span></div>
+      <div class="layer"><b>service.py</b><span>Casos de uso e regras de negócio. Não conhece HTTP: levanta exceções de domínio e faz o <code>commit</code>.</span></div>
+      <div class="layer"><b>repository.py</b><span>Única camada que monta queries. Nunca faz commit.</span></div>
+      <div class="layer"><b>models.py</b><span>Entidades SQLAlchemy 2.0 mapeadas para tabelas.</span></div>
+      <div class="layer"><b>schemas.py</b><span>Pydantic de entrada e saída. Nunca devolve um model direto. Entrada rejeita campos extras.</span></div>
+    </div>
+    <div class="grid g2">
+      <div class="box"><h3>Módulos só conversam pelo service</h3><p>Um módulo importa apenas <code>service</code> e <code>schemas</code> de outro, e o grafo de dependências não pode ter ciclos. Quando precisa reagir sem criar ciclo, usa eventos de domínio (<code>core/events.py</code>).</p></div>
+      <div class="box"><h3>Transação por caso de uso</h3><p>O service chamado pelo router faz o commit. Funções expostas para outros módulos participam da transação de quem chamou, como ocupar uma vaga ao aprovar a matrícula.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="fluxo">
+  <div class="stack">
+    <div class="head"><div class="eyebrow">Funcionamento</div><h2>Do clique ao banco, passo a passo</h2>
+      <p class="lead">Exemplo: a secretaria aprova uma matrícula.</p></div>
+    <ol class="steps">
+      <li><div><strong>Login e token</strong><span>POST /auth/login devolve um access token JWT curto (15 min). O refresh token (7 dias) vai em cookie httpOnly e é rotacionado a cada uso. Senhas com Argon2.</span></div></li>
+      <li><div><strong>Perfil no router</strong><span><code>Depends(require_roles(Role.ADMIN, Role.SECRETARIA))</code> responde 403 para quem não tem o perfil.</span></div></li>
+      <li><div><strong>Propriedade dos dados</strong><span>O service confere o vínculo: um responsável só acessa filhos vinculados. Recurso de outra família responde 404, sem revelar que existe.</span></div></li>
+      <li><div><strong>Regra de negócio e máquina de estados</strong><span>A transição de status passa por uma <code>StateMachine</code>. Transição inválida levanta <code>InvalidTransitionError</code> (409).</span></div></li>
+      <li><div><strong>Persistência e auditoria</strong><span>Repository grava, service faz o commit e registra quem, quando e antes/depois em <code>audit_log</code>.</span></div></li>
+      <li><div><strong>Resposta padronizada</strong><span>Erros saem como <code>{"detail": "...", "code": "..."}</code>, sem stack trace.</span></div></li>
+    </ol>
+    <div class="box"><h3>Evento de domínio</h3><p>O financeiro publica <code>CobrancaPaga</code>; quem se inscreve reage na mesma transação. O módulo que publica não conhece quem escuta.</p></div>
+  </div>
+</section>
+
+<section class="slide" id="poo">
+  <div class="stack">
+    <div class="head"><div class="eyebrow">Orientação a objetos</div><h2>Os quatro pilares no código real</h2>
+      <p class="lead">Trechos que existem hoje no projeto, organizados pelo conceito que demonstram.</p></div>
+    <div class="cols2">
+      <div class="stack" style="gap:12px">
+        <div class="box"><span class="tag ok">Herança e polimorfismo</span><h3 style="margin-top:8px">Hierarquia de exceções</h3><p>O handler global só conhece <code>AppError</code>; cada subclasse define seu código HTTP.</p></div>
+<pre><span class="k">class</span> AppError(Exception):
+    status_code = 500
+    default_code = "INTERNAL_ERROR"
+
+<span class="k">class</span> NotFoundError(AppError): ...      <span class="c"># 404</span>
+<span class="k">class</span> ConflictError(AppError): ...      <span class="c"># 409</span>
+<span class="k">class</span> InvalidTransitionError(ConflictError): ...
+<span class="k">class</span> LLMIndisponivelError(AppError):  <span class="c"># 502</span>
+    status_code = 502</pre>
+      </div>
+      <div class="stack" style="gap:12px">
+        <div class="box"><span class="tag ok">Abstração e polimorfismo</span><h3 style="margin-top:8px">Cliente do LLM por interface</h3><p>O service depende de <code>LLMClient</code>, não de um provedor. Nos testes entra um cliente falso, em produção o DeepSeek.</p></div>
+<pre><span class="k">class</span> LLMClient(Protocol):
+    <span class="k">def</span> chat(self, messages, tools) -> LLMResponse: ...
+
+<span class="k">class</span> DeepSeekClient:
+    <span class="k">def</span> __init__(self, *, api_key, base_url, model, timeout): ...
+    <span class="k">def</span> chat(self, messages, tools) -> LLMResponse: ...</pre>
+      </div>
+      <div class="stack" style="gap:12px">
+        <div class="box"><span class="tag ok">Encapsulamento</span><h3 style="margin-top:8px">Objetos imutáveis com comportamento</h3><p>A identidade do usuário é um objeto congelado que sabe responder se é da equipe.</p></div>
+<pre>@dataclass(frozen=True)
+<span class="k">class</span> CurrentUser:
+    id: int
+    role: Role
+    email: str
+
+    @property
+    <span class="k">def</span> is_staff(self) -> bool:
+        <span class="k">return</span> self.role <span class="k">in</span> (ADMIN, SECRETARIA, FINANCEIRO)</pre>
+      </div>
+      <div class="stack" style="gap:12px">
+        <div class="box"><span class="tag ok">Generics e composição</span><h3 style="margin-top:8px">Máquina de estados reutilizável</h3><p>Uma classe genérica serve a qualquer enum de status (matrícula, cobrança).</p></div>
+<pre><span class="k">class</span> StateMachine[S: Enum]:
+    <span class="k">def</span> can(self, current: S, target: S) -> bool: ...
+    <span class="k">def</span> ensure(self, current: S, target: S) -> None:
+        <span class="k">if not</span> self.can(current, target):
+            <span class="k">raise</span> InvalidTransitionError(...)</pre>
+      </div>
+    </div>
+    <div class="grid g3">
+      <div class="box"><h3>Mixins nos models</h3><p><code>TimestampMixin</code> e <code>SoftDeleteMixin</code> são herdados junto com <code>Base</code> por várias entidades.</p></div>
+      <div class="box"><h3>Herança nos schemas</h3><p><code>AlunoCreate(AlunoDados)</code>, <code>ResponsavelPreMatricula(ResponsavelDados)</code>: dados comuns num pai, extensões nos filhos.</p></div>
+      <div class="box"><h3>Enums de domínio</h3><p><code>Role</code>, <code>StatusCobranca</code>, <code>Parentesco</code>, <code>Serie</code> como <code>StrEnum</code>, com métodos como <code>Serie.label</code>.</p></div>
+    </div>
+    <div class="box seed">
+      <h3>O que ainda é procedural, e a refatoração planejada</h3>
+      <p>Os <em>services</em> e <em>repositories</em> são funções soltas e os models guardam só dados. Para ficar fiel ao conteúdo da disciplina, o plano é:</p>
+      <ul>
+        <li><b>Modelo de domínio rico:</b> mover regras para as entidades, como <code>Cobranca.marcar_paga()</code>, <code>Cobranca.atualizar_atraso(hoje)</code> e <code>Bolsa.vigente_em(data)</code>.</li>
+        <li><b>Classes de serviço e repositório:</b> <code>BaseRepository[T]</code> genérico e <code>CobrancaService</code> com a sessão injetada.</li>
+        <li><b>Strategy:</b> <code>PaymentGateway</code> abstrata com <code>FakeGateway</code> e <code>CoraGateway</code>.</li>
+        <li><b>Hierarquia de pessoas:</b> classe <code>Pessoa</code> com <code>Aluno</code>, <code>Responsavel</code>, <code>Professor</code> e <code>Funcionario</code>.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="ia">
+  <div class="stack">
+    <div class="head"><div class="eyebrow">Inteligência artificial</div><h2>Um assistente que conversa e executa</h2>
+      <p class="lead">O usuário pede em linguagem natural ("lança 8,5 de Matemática pro João no 2º bimestre"). O modelo decide quais funções do sistema chamar, e quem altera dados é sempre o usuário, com um clique.</p></div>
+    <div class="grid g3">
+      <div class="box hl"><h3>Dúvidas</h3><p>Responde "como faço...?" consultando uma base de ajuda do sistema, sem inventar telas ou regras.</p></div>
+      <div class="box hl"><h3>Consultas</h3><p>Busca alunos, boletim, frequência, cobranças, avisos e turmas usando as permissões de quem perguntou.</p></div>
+      <div class="box hl"><h3>Ações</h3><p>Propõe lançar nota, aprovar matrícula, criar aviso e outras, mostrando um cartão com Confirmar e Cancelar.</p></div>
+    </div>
+    <div class="grid g2">
+      <div class="box"><h3>O que é tool calling</h3><p>Em vez de só gerar texto, o modelo recebe a lista de funções disponíveis com seus parâmetros e devolve "chame a função X com estes argumentos". O sistema executa e devolve o resultado para o modelo continuar.</p></div>
+      <div class="box"><h3>Onde vive</h3><p>Módulo <code>assistente</code> da própria API, com 3 tabelas: conversas, mensagens e ações pendentes. Cada usuário só vê as próprias conversas.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="tools">
+  <div class="stack">
+    <div class="head"><div class="eyebrow">Tool calling</div><h2>O loop do agente</h2>
+      <p class="lead">Implementado em <code>assistente/service.py</code>. Repete até o modelo responder só com texto, ou até um limite de passos.</p></div>
+    <ol class="steps">
+      <li><div><strong>Monta o contexto</strong><span>System prompt do perfil do usuário + últimas mensagens da conversa + a lista de ferramentas que aquele perfil pode usar.</span></div></li>
+      <li><div><strong>Chama o LLM</strong><span><code>llm_client.chat(historico, tools)</code> no formato chat/completions com <code>tools</code>.</span></div></li>
+      <li><div><strong>Veio texto?</strong><span>Salva a resposta e termina. Veio <code>tool_calls</code>? Segue para executar cada chamada.</span></div></li>
+      <li><div><strong>Valida a chamada</strong><span>Ferramenta existe e o perfil permite? Os argumentos passam no schema Pydantic? Se não, o erro volta ao modelo para ele corrigir.</span></div></li>
+      <li><div><strong>Consulta: executa</strong><span>Chama o <em>service</em> do módulo com o usuário real, limita o tamanho do resultado e devolve ao modelo.</span></div></li>
+      <li><div><strong>Alteração: só propõe</strong><span>Gera um resumo a partir do banco, grava uma ação pendente e <b>para o loop</b>. A resposta ao usuário traz os botões.</span></div></li>
+      <li><div><strong>Usuário confirma</strong><span>O clique chama <code>POST /acoes/{id}/confirmar</code>, que revalida perfil e regras, executa e audita.</span></div></li>
+    </ol>
+    <div class="cols2">
+      <div class="stack" style="gap:12px">
+        <h3>Como uma ferramenta é declarada</h3>
+<pre>@dataclass(frozen=True)
+<span class="k">class</span> Tool:
+    name: str
+    titulo: str
+    description: str          <span class="c"># o modelo lê isto</span>
+    input_model: type[BaseModel]  <span class="c"># schema dos args</span>
+    roles: tuple[Role, ...]   <span class="c"># quem pode usar</span>
+    handler: Handler          <span class="c"># chama o service</span>
+    mutates: bool = False     <span class="c"># altera dados?</span>
+    destrutiva: bool = False
+    preview: Preview | None = None
+
+    <span class="k">def</span> spec(self) -> dict:      <span class="c"># JSON p/ a API</span>
+        ...</pre>
+      </div>
+      <div class="stack" style="gap:12px">
+        <h3>Catálogo: 26 consultas e 35 alterações</h3>
+        <div class="scroll"><table>
+          <tr><th>Área</th><th>Consulta</th><th>Alteração (com confirmação)</th></tr>
+          <tr><td>Pessoas</td><td>buscar_alunos, obter_aluno, listar_meus_alunos</td><td>criar_aluno, vincular_responsavel, excluir_aluno</td></tr>
+          <tr><td>Turmas</td><td>listar_turmas, obter_turma</td><td>criar_turma, adicionar_professor_na_turma</td></tr>
+          <tr><td>Matrícula</td><td>listar_matriculas, obter_matricula</td><td>aprovar_matricula, rejeitar_matricula</td></tr>
+          <tr><td>Notas e frequência</td><td>obter_boletim, ver_chamada_do_dia</td><td>lancar_nota, lancar_chamada</td></tr>
+          <tr><td>Financeiro</td><td>listar_cobrancas, verificar_inadimplencia</td><td>gerar_mensalidades, marcar_cobranca_paga</td></tr>
+          <tr><td>Calendário e avisos</td><td>listar_eventos, listar_avisos</td><td>criar_evento, criar_aviso</td></tr>
+        </table></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="seg">
+  <div class="stack">
+    <div class="head"><div class="eyebrow">Segurança da IA</div><h2>O modelo propõe, o servidor decide</h2>
+      <p class="lead">Quatro garantias de projeto, todas no back-end.</p></div>
+    <div class="grid g2">
+      <div class="box hl"><h3>1. O modelo nunca escreve</h3><p>Ferramentas com <code>mutates=True</code> não são executadas pelo loop. Só o endpoint de confirmação, disparado por clique do usuário autenticado, executa.</p></div>
+      <div class="box hl"><h3>2. Mesmas permissões da API</h3><p>Tudo roda com o <code>CurrentUser</code> real. Como os services não checam perfil, cada ferramenta reaplica os perfis do módulo e o modelo só recebe as ferramentas do perfil.</p></div>
+      <div class="box hl"><h3>3. Resumo vem do banco</h3><p>O texto do cartão ("Aprovar matrícula #12 de Maria Souza, 3º ano") é montado pelo servidor, então o usuário percebe se o modelo errou um id.</p></div>
+      <div class="box hl"><h3>4. Dado não é instrução</h3><p>O prompt manda tratar o conteúdo devolvido pelas ferramentas como informação. Um aviso com "ignore as regras" não ganha poder de comando.</p></div>
+    </div>
+    <div class="grid g3">
+      <div class="box"><h3>Uso único e expiração</h3><p>A ação pendente confirma uma vez e expira em minutos. Segundo clique responde 409.</p></div>
+      <div class="box"><h3>Argumentos congelados</h3><p>O clique não aceita argumentos novos: executa exatamente o que foi mostrado.</p></div>
+      <div class="box"><h3>Auditoria</h3><p>Cada confirmação grava <code>assistente.&lt;ferramenta&gt;</code> em <code>audit_log</code>, distinguindo o que foi feito pelo assistente.</p></div>
+    </div>
+    <div class="box"><h3>Dados sensíveis</h3><p>CPF, ids de usuário e hashes são removidos do que o modelo recebe das ferramentas. Há limite de requisições por minuto e limite de passos do loop.</p></div>
+  </div>
+</section>
+
+<section class="slide" id="deploy">
+  <div class="stack">
+    <div class="head"><div class="eyebrow">Produção</div><h2>Rodando no Railway</h2>
+      <p class="lead">Seis serviços em um único projeto e ambiente de produção.</p></div>
+    <div class="grid g3">
+      <div class="box"><h3>backend</h3><p>Imagem Docker com FastAPI. Na subida roda <code>alembic upgrade head</code> e depois o Uvicorn.</p></div>
+      <div class="box"><h3>Postgres</h3><p>Banco gerenciado com volume persistente de 5 GB.</p></div>
+      <div class="box"><h3>4 frontends</h3><p>painel-admin, portal-responsavel, portal-aluno e portal-professor, cada um apontando para a API via <code>VITE_API_URL</code>.</p></div>
+    </div>
+    <div class="grid g2">
+      <div class="box"><h3>Configuração por ambiente</h3><p>Segredos e URLs por variáveis (<code>SECRET_KEY</code>, <code>DATABASE_URL</code>, <code>CORS_ORIGINS</code>). Em produção a aplicação se recusa a subir com chave padrão.</p></div>
+      <div class="box"><h3>Qualidade automatizada</h3><p>CI com ruff, mypy, testes contra PostgreSQL real e cobertura mínima de 80%. Testes de arquitetura validam camadas e dependências entre módulos.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="fim">
+  <div class="stack">
+    <div class="head"><div class="eyebrow">Próximos passos</div><h2>O que falta para fechar o MVP</h2></div>
+    <div class="grid g2">
+      <div class="box seed"><h3>Orientação a objetos</h3><p>Migrar services e repositories para classes, enriquecer as entidades com comportamento e introduzir Strategy no gateway de pagamento.</p></div>
+      <div class="box seed"><h3>IA</h3><p>Testes de paridade entre perfis das ferramentas e das rotas, streaming de resposta e mais ferramentas de relatório.</p></div>
+      <div class="box seed"><h3>Produção</h3><p>Volume ou storage de objetos para os uploads, domínio próprio para o cookie de refresh e segredos somente por variável de ambiente.</p></div>
+      <div class="box seed"><h3>Produto</h3><p>Cobrança real via banco, notificações e relatórios gerenciais.</p></div>
+    </div>
+    <p class="note">Dica de navegação: use as setas do teclado, PageUp e PageDown para passar de slide.</p>
+  </div>
+</section>
+
+</main>
+
+<script>
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  function cur(){var y=window.scrollY+120,i=0;slides.forEach(function(s,k){if(s.offsetTop<=y)i=k});return i}
+  function go(i){i=Math.max(0,Math.min(slides.length-1,i));slides[i].scrollIntoView({behavior:'smooth',block:'start'})}
+  document.addEventListener('keydown',function(e){
+    var t=e.target&&e.target.tagName; if(t==='INPUT'||t==='TEXTAREA')return;
+    if(e.key==='ArrowRight'||e.key==='PageDown'){e.preventDefault();go(cur()+1)}
+    if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(cur()-1)}
+  });
+  var root=document.documentElement,btn=document.getElementById('themeBtn');
+  btn.addEventListener('click',function(){
+    var dark=root.getAttribute('data-theme')==='dark'||(!root.getAttribute('data-theme')&&matchMedia('(prefers-color-scheme: dark)').matches);
+    root.setAttribute('data-theme',dark?'light':'dark');
+  });
+})();
+</script>

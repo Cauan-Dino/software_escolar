@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import ReactMarkdown, { type Components } from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import {
   AlertTriangle,
   Check,
@@ -285,19 +287,51 @@ export function ChatAssistente() {
   )
 }
 
+// Estilos do markdown das respostas do assistente (tabelas, listas, negrito, código).
+const markdownComponents: Components = {
+  p: ({ children }) => <p className="my-1.5 first:mt-0 last:mb-0">{children}</p>,
+  strong: ({ children }) => <strong className="font-semibold text-slate-900">{children}</strong>,
+  ul: ({ children }) => <ul className="my-1.5 list-disc space-y-0.5 pl-5">{children}</ul>,
+  ol: ({ children }) => <ol className="my-1.5 list-decimal space-y-0.5 pl-5">{children}</ol>,
+  h1: ({ children }) => <h3 className="mb-1 mt-2 text-base font-semibold">{children}</h3>,
+  h2: ({ children }) => <h3 className="mb-1 mt-2 text-base font-semibold">{children}</h3>,
+  h3: ({ children }) => <h4 className="mb-1 mt-2 text-sm font-semibold">{children}</h4>,
+  a: ({ children, href }) => (
+    <a href={href} target="_blank" rel="noreferrer" className="text-emerald-700 underline">
+      {children}
+    </a>
+  ),
+  code: ({ children }) => (
+    <code className="rounded bg-slate-100 px-1 py-0.5 text-[12px] text-slate-800">{children}</code>
+  ),
+  hr: () => <hr className="my-2 border-slate-200" />,
+  table: ({ children }) => (
+    <div className="my-2 overflow-x-auto rounded-lg ring-1 ring-slate-200">
+      <table className="w-full border-collapse text-left text-xs">{children}</table>
+    </div>
+  ),
+  thead: ({ children }) => <thead className="bg-emerald-50 text-emerald-900">{children}</thead>,
+  th: ({ children }) => <th className="whitespace-nowrap px-2.5 py-1.5 font-semibold">{children}</th>,
+  td: ({ children }) => (
+    <td className="whitespace-nowrap border-t border-slate-100 px-2.5 py-1.5">{children}</td>
+  ),
+}
+
 function Balao({ mensagem }: { mensagem: MensagemRead }) {
   const meu = mensagem.role === 'user'
   return (
     <div className={`flex ${meu ? 'justify-end' : 'justify-start'}`}>
-      <div
-        className={`max-w-[85%] whitespace-pre-wrap rounded-2xl px-3.5 py-2 text-sm leading-relaxed ${
-          meu
-            ? 'rounded-br-md bg-emerald-600 text-white'
-            : 'rounded-bl-md bg-white text-slate-800 shadow-card ring-1 ring-slate-200'
-        }`}
-      >
-        {mensagem.conteudo}
-      </div>
+      {meu ? (
+        <div className="max-w-[85%] whitespace-pre-wrap rounded-2xl rounded-br-md bg-emerald-600 px-3.5 py-2 text-sm leading-relaxed text-white">
+          {mensagem.conteudo}
+        </div>
+      ) : (
+        <div className="min-w-0 max-w-[92%] rounded-2xl rounded-bl-md bg-white px-3.5 py-2 text-sm leading-relaxed text-slate-800 shadow-card ring-1 ring-slate-200">
+          <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
+            {mensagem.conteudo ?? ''}
+          </ReactMarkdown>
+        </div>
+      )}
     </div>
   )
 }
