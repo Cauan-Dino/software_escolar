@@ -126,7 +126,7 @@ export function MatriculaPage() {
                 </p>
               )}
 
-              <div className="mb-3 grid grid-cols-2 gap-2">
+              <div className="mb-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
                 {m.documentos.map((d) => (
                   <div
                     key={d.tipo}
@@ -281,7 +281,7 @@ function NovaPreMatriculaModal({
                 className="input"
               />
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div>
                 <label className="mb-1.5 block text-sm font-medium text-slate-700">
                   Data de nascimento
@@ -308,7 +308,7 @@ function NovaPreMatriculaModal({
           </>
         )}
 
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <div>
             <label className="mb-1.5 block text-sm font-medium text-slate-700">
               Ano letivo

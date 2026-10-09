@@ -158,3 +158,17 @@
   scrollbar-width: thin;
   scrollbar-color: rgb(255 255 255 / 0.12) transparent;
 }
+
+/* Celular: 16px nos campos evita o zoom automático do iOS ao focar. */
+@media (max-width: 639px) {
+  .input,
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}

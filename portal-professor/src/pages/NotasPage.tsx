@@ -22,7 +22,7 @@ export function NotasPage() {
     <div>
       <PageHeader title="Notas" subtitle="Lançamento de notas por turma e período" />
 
-      <div className="mb-6 grid grid-cols-2 gap-4 sm:max-w-md">
+      <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:max-w-md">
         <div>
           <label className="mb-1.5 block text-sm font-medium text-slate-700">Turma</label>
           <select
@@ -106,7 +106,7 @@ function GradeTable({ turmaId, periodo }: { turmaId: number; periodo: Periodo })
 
   return (
     <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white">
-      <table className="w-full text-sm">
+      <table className="w-full min-w-[30rem] text-sm">
         <thead>
           <tr className="border-b border-slate-100 bg-slate-50 text-left text-xs font-medium uppercase text-slate-500">
             <th className="px-4 py-3">Aluno</th>

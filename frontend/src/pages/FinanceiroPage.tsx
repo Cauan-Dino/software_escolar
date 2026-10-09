@@ -131,8 +131,8 @@ function AbaCobrancas() {
 
       {error && <ErrorBanner message={error} />}
 
-      <div className="overflow-hidden rounded-xl border border-slate-200 bg-white">
-        <table className="w-full text-left text-sm">
+      <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white">
+        <table className="w-full min-w-[34rem] text-left text-sm">
           <thead className="bg-slate-50 text-xs uppercase text-slate-500">
             <tr>
               <th className="px-5 py-3 font-medium">Aluno</th>
@@ -336,7 +336,7 @@ function CriarCobrancaForm({ onClose, onSaved }: { onClose: () => void; onSaved:
             className="input"
           />
         </div>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
             <label className="mb-1.5 block text-sm font-medium text-slate-700">Tipo</label>
             <select
@@ -420,8 +420,8 @@ function AbaBolsas() {
 
       {error && <ErrorBanner message={error} />}
 
-      <div className="overflow-hidden rounded-xl border border-slate-200 bg-white">
-        <table className="w-full text-left text-sm">
+      <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white">
+        <table className="w-full min-w-[34rem] text-left text-sm">
           <thead className="bg-slate-50 text-xs uppercase text-slate-500">
             <tr>
               <th className="px-5 py-3 font-medium">Aluno</th>
@@ -536,7 +536,7 @@ function CriarBolsaForm({ onClose, onSaved }: { onClose: () => void; onSaved: ()
             className="input"
           />
         </div>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
             <label className="mb-1.5 block text-sm font-medium text-slate-700">
               Vigência início
@@ -610,8 +610,8 @@ function AbaPrecos() {
 
       {error && <ErrorBanner message={error} />}
 
-      <div className="overflow-hidden rounded-xl border border-slate-200 bg-white">
-        <table className="w-full text-left text-sm">
+      <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white">
+        <table className="w-full min-w-[34rem] text-left text-sm">
           <thead className="bg-slate-50 text-xs uppercase text-slate-500">
             <tr>
               <th className="px-5 py-3 font-medium">Série</th>
@@ -687,7 +687,7 @@ function CriarPrecoForm({ onClose, onSaved }: { onClose: () => void; onSaved: ()
   return (
     <Modal title="Novo preço" onClose={onClose}>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
             <label className="mb-1.5 block text-sm font-medium text-slate-700">Série</label>
             <input
@@ -709,7 +709,7 @@ function CriarPrecoForm({ onClose, onSaved }: { onClose: () => void; onSaved: ()
             />
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
             <label className="mb-1.5 block text-sm font-medium text-slate-700">
               Valor da matrícula (R$)

@@ -58,7 +58,7 @@ export function DashboardPage() {
     <div>
       <PageHeader title={`Olá, ${filhoAtivo.nome.split(' ')[0]}`} subtitle="Resumo da família" />
 
-      <div className="mb-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
+      <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <div className="rounded-xl border border-slate-200 bg-white p-4">
           <div className="mb-2 flex items-center gap-2 text-slate-400">
             <GraduationCap size={16} />

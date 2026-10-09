@@ -73,7 +73,7 @@ export function AppLayout() {
         </div>
       </main>
 
-      <nav className="fixed inset-x-0 bottom-0 z-10 flex justify-center px-3 pb-3">
+      <nav className="fixed inset-x-0 bottom-0 z-10 flex justify-center px-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
         <div className="flex w-full max-w-2xl rounded-2xl border border-slate-200 bg-white/90 p-1 shadow-lift backdrop-blur">
           {navItems.map(({ to, label, icon: Icon }) => (
             <NavLink
@@ -81,7 +81,7 @@ export function AppLayout() {
               to={to}
               end={to === '/'}
               className={({ isActive }) =>
-                `flex flex-1 flex-col items-center gap-0.5 rounded-xl py-1.5 text-[11px] font-medium transition-colors ${
+                `flex flex-1 flex-col items-center gap-0.5 rounded-xl py-1.5 text-[10px] font-medium transition-colors sm:text-[11px] ${
                   isActive
                     ? 'bg-emerald-50 text-emerald-700'
                     : 'text-slate-400 hover:text-slate-600'

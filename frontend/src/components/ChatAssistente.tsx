@@ -158,7 +158,7 @@ export function ChatAssistente() {
         <button
           onClick={() => setAberto(true)}
           aria-label="Abrir assistente"
-          className="fixed bottom-5 right-5 z-40 flex items-center gap-2 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-700 px-4 py-3 text-sm font-semibold text-white shadow-lift ring-1 ring-white/20 transition-transform hover:scale-[1.03]"
+          className="fixed bottom-4 right-4 z-[25] sm:bottom-5 sm:right-5 flex items-center gap-2 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-700 px-4 py-3 text-sm font-semibold text-white shadow-lift ring-1 ring-white/20 transition-transform hover:scale-[1.03]"
         >
           <Sparkles size={18} />
           <span className="hidden sm:inline">Assistente</span>
@@ -168,7 +168,7 @@ export function ChatAssistente() {
       {aberto && (
         <section
           aria-label="Assistente de IA"
-          className="fixed inset-0 z-50 flex flex-col bg-white shadow-lift ring-1 ring-slate-900/10 sm:inset-auto sm:bottom-5 sm:right-5 sm:h-[36rem] sm:w-[26rem] sm:rounded-2xl"
+          className="fixed inset-0 z-50 flex h-[100dvh] flex-col overflow-hidden bg-white shadow-lift ring-1 ring-slate-900/10 sm:inset-auto sm:bottom-5 sm:right-5 sm:h-[min(40rem,calc(100dvh-2.5rem))] sm:w-[min(30rem,calc(100vw-2.5rem))] sm:rounded-2xl"
         >
           <header className="flex items-center gap-3 border-b border-slate-100 bg-emerald-950 px-4 py-3 text-white sm:rounded-t-2xl">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-600">
@@ -197,7 +197,7 @@ export function ChatAssistente() {
             </button>
           </header>
 
-          <div className="flex-1 space-y-3 overflow-y-auto bg-slate-50 px-4 py-4">
+          <div className="min-h-0 flex-1 space-y-3 overflow-y-auto overflow-x-hidden bg-slate-50 px-3 py-4 sm:px-4">
             {mensagens.length === 0 && !enviando && (
               <div className="pt-4 text-center">
                 <p className="font-display text-base font-semibold text-slate-800">
@@ -255,7 +255,7 @@ export function ChatAssistente() {
               e.preventDefault()
               void enviar(texto)
             }}
-            className="flex items-end gap-2 border-t border-slate-100 bg-white p-3 sm:rounded-b-2xl"
+            className="flex items-end gap-2 border-t border-slate-100 bg-white p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:rounded-b-2xl"
           >
             <textarea
               ref={inputRef}
@@ -270,7 +270,7 @@ export function ChatAssistente() {
               rows={1}
               maxLength={2000}
               placeholder="Escreva sua mensagem..."
-              className="max-h-28 min-h-[2.5rem] flex-1 resize-none rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 outline-none focus:border-emerald-500 focus:bg-white"
+              className="max-h-28 min-h-[2.5rem] flex-1 resize-none rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-base text-slate-900 outline-none focus:border-emerald-500 focus:bg-white sm:text-sm"
             />
             <button
               type="submit"
@@ -307,13 +307,13 @@ const markdownComponents: Components = {
   hr: () => <hr className="my-2 border-slate-200" />,
   table: ({ children }) => (
     <div className="my-2 overflow-x-auto rounded-lg ring-1 ring-slate-200">
-      <table className="w-full border-collapse text-left text-xs">{children}</table>
+      <table className="w-full border-collapse text-left text-[11px] sm:text-xs">{children}</table>
     </div>
   ),
   thead: ({ children }) => <thead className="bg-emerald-50 text-emerald-900">{children}</thead>,
-  th: ({ children }) => <th className="whitespace-nowrap px-2.5 py-1.5 font-semibold">{children}</th>,
+  th: ({ children }) => <th className="px-1.5 py-1.5 align-bottom font-semibold sm:px-2">{children}</th>,
   td: ({ children }) => (
-    <td className="whitespace-nowrap border-t border-slate-100 px-2.5 py-1.5">{children}</td>
+    <td className="border-t border-slate-100 px-1.5 py-1.5 sm:px-2">{children}</td>
   ),
 }
 
@@ -322,11 +322,11 @@ function Balao({ mensagem }: { mensagem: MensagemRead }) {
   return (
     <div className={`flex ${meu ? 'justify-end' : 'justify-start'}`}>
       {meu ? (
-        <div className="max-w-[85%] whitespace-pre-wrap rounded-2xl rounded-br-md bg-emerald-600 px-3.5 py-2 text-sm leading-relaxed text-white">
+        <div className="max-w-[85%] whitespace-pre-wrap break-words rounded-2xl rounded-br-md bg-emerald-600 px-3.5 py-2 text-sm leading-relaxed text-white">
           {mensagem.conteudo}
         </div>
       ) : (
-        <div className="min-w-0 max-w-[92%] rounded-2xl rounded-bl-md bg-white px-3.5 py-2 text-sm leading-relaxed text-slate-800 shadow-card ring-1 ring-slate-200">
+        <div className="min-w-0 max-w-full rounded-2xl rounded-bl-md bg-white px-3.5 py-2 text-sm leading-relaxed text-slate-800 shadow-card ring-1 ring-slate-200">
           <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
             {mensagem.conteudo ?? ''}
           </ReactMarkdown>
