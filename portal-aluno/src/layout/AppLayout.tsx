@@ -11,6 +11,7 @@ import {
   Sprout,
 } from 'lucide-react'
 import { useAuth } from '../lib/AuthContext'
+import { InstallButton } from '../components/InstallButton'
 
 const navItems = [
   { to: '/', label: 'Início', icon: LayoutDashboard },
@@ -48,6 +49,7 @@ export function AppLayout() {
           </div>
         </div>
         <div className="flex items-center gap-1">
+          <InstallButton variant="compact" />
           <NavLink
             to="/perfil"
             title="Perfil"

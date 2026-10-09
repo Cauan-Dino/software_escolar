@@ -19,6 +19,7 @@ import {
   X,
 } from 'lucide-react'
 import { useAuth } from '../lib/AuthContext'
+import { InstallButton } from '../components/InstallButton'
 import { ChatAssistente, EVENTO_ACAO_CONFIRMADA } from '../components/ChatAssistente'
 
 const navGroups = [
@@ -168,6 +169,8 @@ export function AppLayout() {
             </div>
           ))}
         </nav>
+
+        <InstallButton />
 
         <div className="border-t border-white/10 p-3">
           <div className="flex items-center gap-1 rounded-xl p-1.5">

@@ -12,6 +12,7 @@ import {
   X,
 } from 'lucide-react'
 import { useAuth } from '../lib/AuthContext'
+import { InstallButton } from '../components/InstallButton'
 
 const navItems = [
   { to: '/', label: 'Minhas turmas', icon: LayoutDashboard },
@@ -113,6 +114,8 @@ export function AppLayout() {
             </NavLink>
           ))}
         </nav>
+
+        <InstallButton />
 
         <div className="border-t border-white/10 p-3">
           <div className="flex items-center gap-1 rounded-xl p-1.5">
