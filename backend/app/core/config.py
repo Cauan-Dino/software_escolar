@@ -25,7 +25,13 @@ class Settings(BaseSettings):
     refresh_cookie_secure: bool = False
 
     # HTTP
-    cors_origins: list[str] = ["http://localhost:5173", "http://localhost:8080"]
+    cors_origins: list[str] = [
+        "http://localhost:5173",  # painel administrativo
+        "http://localhost:5174",  # portal do responsável
+        "http://localhost:5175",  # portal do aluno
+        "http://localhost:5176",  # portal do professor
+        "http://localhost:8080",
+    ]
 
     # Rate limit (requisições por janela de 60 segundos)
     login_rate_limit_per_minute: int = 5

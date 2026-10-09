@@ -21,6 +21,7 @@ class Aluno(TimestampMixin, SoftDeleteMixin, Base):
     )
 
     id: Mapped[int] = mapped_column(primary_key=True)
+    user_id: Mapped[int | None] = mapped_column(ForeignKey("users.id"), unique=True)
     nome: Mapped[str] = mapped_column(String(150), index=True)
     data_nascimento: Mapped[date] = mapped_column(Date)
     cpf: Mapped[str | None] = mapped_column(String(11))

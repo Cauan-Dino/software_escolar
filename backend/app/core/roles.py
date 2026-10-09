@@ -9,6 +9,7 @@ class Role(StrEnum):
     FINANCEIRO = "FINANCEIRO"
     PROFESSOR = "PROFESSOR"
     RESPONSAVEL = "RESPONSAVEL"
+    ALUNO = "ALUNO"
 
 
 # Agrupamentos reutilizados pelos permissions.py dos módulos.

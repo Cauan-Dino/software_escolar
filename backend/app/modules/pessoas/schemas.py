@@ -101,6 +101,7 @@ class VinculoRead(OutputSchema):
 
 class AlunoRead(OutputSchema):
     id: int
+    user_id: int | None = None
     nome: str
     data_nascimento: date
     cpf: str | None

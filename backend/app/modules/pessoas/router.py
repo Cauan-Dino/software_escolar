@@ -4,7 +4,9 @@ from fastapi import APIRouter, Depends, Query, Request, Response, status
 
 from app.core.config import settings
 from app.core.deps import CurrentUser, DbSession, get_client_ip, require_roles
+from app.core.exceptions import NotFoundError
 from app.core.rate_limit import RateLimiter
+from app.core.roles import Role
 from app.modules.pessoas import permissions, service
 from app.modules.pessoas.schemas import (
     AcessoCreate,
@@ -51,6 +53,25 @@ def list_alunos(
     _: CurrentUser = Depends(require_roles(*permissions.CAN_LIST_ALUNOS)),
 ) -> Page[AlunoListItem]:
     return service.list_alunos(db, busca=busca, limit=page.limit, offset=page.offset)
+
+
+@router.get("/alunos/meus", response_model=list[AlunoRead])
+def list_meus_alunos(
+    db: DbSession,
+    user: CurrentUser = Depends(require_roles(Role.RESPONSAVEL)),
+) -> list[AlunoRead]:
+    return service.list_meus_alunos(db, user)
+
+
+@router.get("/alunos/eu", response_model=AlunoRead)
+def get_meu_aluno(
+    db: DbSession,
+    user: CurrentUser = Depends(require_roles(Role.ALUNO)),
+) -> AlunoRead:
+    aluno = service.get_aluno_by_user(db, user.id)
+    if aluno is None:
+        raise NotFoundError("Aluno não encontrado.")
+    return aluno
 
 
 @router.post("/alunos", response_model=AlunoRead, status_code=status.HTTP_201_CREATED)
@@ -120,6 +141,16 @@ def remove_vinculo(
     _: CurrentUser = Depends(require_roles(*permissions.CAN_MANAGE_ALUNOS)),
 ) -> AlunoRead:
     return service.remove_vinculo(db, aluno_id, responsavel_id)
+
+
+@router.post("/alunos/{aluno_id}/acesso", response_model=AlunoRead)
+def grant_aluno_acesso(
+    aluno_id: int,
+    payload: AcessoCreate,
+    db: DbSession,
+    _: CurrentUser = Depends(require_roles(Role.ADMIN, Role.SECRETARIA)),
+) -> AlunoRead:
+    return service.grant_aluno_acesso(db, aluno_id, payload)
 
 
 # --- Responsáveis ------------------------------------------------------------------------

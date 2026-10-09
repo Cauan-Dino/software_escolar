@@ -41,6 +41,15 @@ def get_aluno_by_cpf(db: Session, cpf: str) -> Aluno | None:
     return db.scalar(select(Aluno).where(Aluno.cpf == cpf, Aluno.deleted_at.is_(None)))
 
 
+def get_aluno_by_user_id(db: Session, user_id: int) -> Aluno | None:
+    stmt = (
+        select(Aluno)
+        .where(Aluno.user_id == user_id, Aluno.deleted_at.is_(None))
+        .options(selectinload(Aluno.vinculos).selectinload(ResponsavelAluno.responsavel))
+    )
+    return db.scalar(stmt)
+
+
 def list_alunos(
     db: Session, *, busca: str | None, limit: int, offset: int
 ) -> tuple[list[Aluno], int]:

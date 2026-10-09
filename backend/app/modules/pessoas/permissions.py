@@ -7,7 +7,7 @@ filhos) é feita no service por `ensure_can_access_aluno`.
 from app.core.roles import SECRETARIA_E_ADMIN, STAFF, Role
 
 CAN_LIST_ALUNOS: tuple[Role, ...] = STAFF
-CAN_VIEW_ALUNO: tuple[Role, ...] = (*STAFF, Role.RESPONSAVEL)
+CAN_VIEW_ALUNO: tuple[Role, ...] = (*STAFF, Role.RESPONSAVEL, Role.ALUNO)
 CAN_MANAGE_ALUNOS: tuple[Role, ...] = SECRETARIA_E_ADMIN
 CAN_DELETE_ALUNO: tuple[Role, ...] = (Role.ADMIN,)
 

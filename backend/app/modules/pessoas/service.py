@@ -52,6 +52,7 @@ def _aluno_read(aluno: Aluno) -> AlunoRead:
     )
     return AlunoRead(
         id=aluno.id,
+        user_id=aluno.user_id,
         nome=aluno.nome,
         data_nascimento=aluno.data_nascimento,
         cpf=aluno.cpf,
@@ -110,6 +111,11 @@ def ensure_can_access_aluno(
     if user.role == Role.RESPONSAVEL:
         ids = list_aluno_ids_do_usuario(db, user, include_deleted=include_deleted)
         if aluno_id not in ids:
+            raise NotFoundError(ALUNO_NAO_ENCONTRADO)
+        return
+    if user.role == Role.ALUNO:
+        aluno = repository.get_aluno_by_user_id(db, user.id)
+        if aluno is None or aluno.id != aluno_id:
             raise NotFoundError(ALUNO_NAO_ENCONTRADO)
         return
     raise ForbiddenError()
@@ -236,9 +242,33 @@ def list_alunos_reads(
     return [_aluno_read(a) for a in alunos]
 
 
+def list_meus_alunos(db: Session, user: CurrentUser) -> list[AlunoRead]:
+    """Alunos vinculados ao RESPONSAVEL logado (inclui cadastros cancelados, p/ histórico)."""
+    aluno_ids = list_aluno_ids_do_usuario(db, user, include_deleted=True)
+    return list_alunos_reads(db, aluno_ids, include_deleted=True)
+
+
 def find_aluno_by_cpf(db: Session, cpf: str) -> AlunoRead | None:
     aluno = repository.get_aluno_by_cpf(db, cpf)
     return get_aluno_read(db, aluno.id) if aluno else None
+
+
+def get_aluno_by_user(db: Session, user_id: int) -> AlunoRead | None:
+    """API pública: aluno ligado a uma conta de usuário (ou None)."""
+    aluno = repository.get_aluno_by_user_id(db, user_id)
+    return _aluno_read(aluno) if aluno else None
+
+
+def grant_aluno_acesso(db: Session, aluno_id: int, data: AcessoCreate) -> AlunoRead:
+    aluno = _get_aluno_or_404(db, aluno_id)
+    if aluno.user_id is not None:
+        raise ConflictError("Este aluno já possui acesso.", "ACESSO_EXISTENTE")
+    user = auth_service.create_user_account(
+        db, email=data.email, nome=aluno.nome, password=data.password, role=Role.ALUNO
+    )
+    aluno.user_id = user.id
+    db.commit()
+    return _aluno_read(aluno)
 
 
 def _ensure_aluno_cpf_free(db: Session, cpf: str) -> None:
