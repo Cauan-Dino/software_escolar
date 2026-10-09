@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: semeando
+          POSTGRES_PASSWORD: semeando
+          POSTGRES_DB: semeando_test
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U semeando" --health-interval 5s
+          --health-timeout 3s --health-retries 10
+    env:
+      TEST_DATABASE_URL: postgresql+psycopg://semeando:semeando@localhost:5432/semeando_test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.11.4"
+      - name: Instalar dependências
+        run: uv sync --frozen
+      - name: Lint (ruff)
+        run: |
+          uv run ruff check .
+          uv run ruff format --check .
+      - name: Tipos (mypy)
+        run: uv run mypy app tests
+      - name: Testes + cobertura geral
+        run: uv run pytest --cov=app --cov-report=term --cov-fail-under=80
+      - name: Cobertura mínima de 80% nos services
+        run: uv run coverage report --include="app/modules/*/service.py" --fail-under=80
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Tipos
+        run: npm run typecheck
+      - name: Testes (Vitest)
+        run: npm test
+      - name: Build
+        run: npm run build
