@@ -30,7 +30,7 @@ export function Pagination({
         <button
           onClick={onPrev}
           disabled={!hasPrev}
-          className="flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-3 py-1.5 font-medium text-slate-600 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
+          className="flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-3 py-1.5 font-medium text-slate-600 shadow-card transition-colors hover:border-slate-300 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
         >
           <ChevronLeft size={15} />
           Anterior
@@ -38,7 +38,7 @@ export function Pagination({
         <button
           onClick={onNext}
           disabled={!hasNext}
-          className="flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-3 py-1.5 font-medium text-slate-600 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
+          className="flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-3 py-1.5 font-medium text-slate-600 shadow-card transition-colors hover:border-slate-300 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
         >
           Próxima
           <ChevronRight size={15} />

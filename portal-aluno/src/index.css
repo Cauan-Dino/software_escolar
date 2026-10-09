@@ -1,27 +1,160 @@
 @import 'tailwindcss';
 
+/*
+ * Tema "Semeando".
+ * As páginas usam as classes emerald-* e slate-*; redefinimos as duas rampas
+ * aqui para trocar a identidade visual sem tocar em cada tela:
+ *   emerald → verde-floresta (marca)
+ *   slate   → neutros esverdeados, mais quentes que o cinza-azulado padrão
+ */
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+
+  --color-emerald-50: #f1f7f3;
+  --color-emerald-100: #dcebe2;
+  --color-emerald-200: #bcd8c7;
+  --color-emerald-300: #8fbea4;
+  --color-emerald-400: #5fa07f;
+  --color-emerald-500: #3f8765;
+  --color-emerald-600: #2c6e50;
+  --color-emerald-700: #245841;
+  --color-emerald-800: #1e4635;
+  --color-emerald-900: #183a2c;
+  --color-emerald-950: #0d2119;
+
+  --color-slate-50: #f8f9f6;
+  --color-slate-100: #f0f2ee;
+  --color-slate-200: #e2e6df;
+  --color-slate-300: #cdd2c9;
+  --color-slate-400: #99a094;
+  --color-slate-500: #6c7468;
+  --color-slate-600: #545c50;
+  --color-slate-700: #3c433a;
+  --color-slate-800: #262c25;
+  --color-slate-900: #161a15;
+  --color-slate-950: #0b0e0a;
+
+  --color-amber-50: #fdf8ec;
+  --color-amber-600: #b7791f;
+
+  --shadow-card: 0 1px 2px rgb(22 26 21 / 0.04), 0 1px 3px rgb(22 26 21 / 0.04);
+  --shadow-lift: 0 4px 12px -2px rgb(22 26 21 / 0.08), 0 12px 28px -6px rgb(22 26 21 / 0.1);
+}
+
 :root {
   color-scheme: light;
 }
 
-body {
-  margin: 0;
-  font-family: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
-  background-color: #f3f4f6;
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-feature-settings: 'cv11', 'ss01';
+    background-color: var(--color-slate-50);
+    color: var(--color-slate-900);
+  }
+
+  h1,
+  h2 {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+  }
+
+  ::selection {
+    background-color: var(--color-emerald-200);
+  }
+
+  /* Tabelas: cabeçalho discreto, linhas com mais respiro. */
+  thead th {
+    font-size: 0.6875rem;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+    color: var(--color-slate-500);
+    border-bottom: 1px solid var(--color-slate-200);
+  }
+
+  tbody tr {
+    transition: background-color 120ms ease;
+  }
+
+  button:not(:disabled),
+  [role='button'] {
+    cursor: pointer;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-emerald-500);
+    outline-offset: 2px;
+  }
 }
 
-.input {
-  width: 100%;
-  border-radius: 0.5rem;
-  border: 1px solid #e2e8f0;
-  padding: 0.5rem 0.75rem;
-  font-size: 0.875rem;
-  color: #0f172a;
-  outline: none;
-  background-color: #fff;
+@layer components {
+  .input {
+    width: 100%;
+    border-radius: 0.625rem;
+    border: 1px solid var(--color-slate-200);
+    padding: 0.55rem 0.8rem;
+    font-size: 0.875rem;
+    color: var(--color-slate-900);
+    outline: none;
+    background-color: #fff;
+    box-shadow: var(--shadow-card);
+    transition:
+      border-color 120ms ease,
+      box-shadow 120ms ease;
+  }
+
+  .input::placeholder {
+    color: var(--color-slate-400);
+  }
+
+  .input:hover {
+    border-color: var(--color-slate-300);
+  }
+
+  .input:focus {
+    border-color: var(--color-emerald-500);
+    box-shadow: 0 0 0 3px rgb(63 135 101 / 0.18);
+  }
+
+  /* Cartão padrão para novas telas/seções. */
+  .card {
+    border-radius: 1rem;
+    border: 1px solid var(--color-slate-200);
+    background-color: #fff;
+    box-shadow: var(--shadow-card);
+  }
 }
 
-.input:focus {
-  border-color: #10b981;
-  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+/* Entrada suave das páginas. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-rise {
+  animation: rise 360ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-rise {
+    animation: none;
+  }
+}
+
+.sidebar-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(255 255 255 / 0.12) transparent;
 }
