@@ -6,6 +6,7 @@ adicione o import do `models` dele aqui.
 
 from app.core import audit  # noqa: F401
 from app.core.database import Base
+from app.modules.assistente import models as assistente_models  # noqa: F401
 from app.modules.auth import models as auth_models  # noqa: F401
 from app.modules.calendario import models as calendario_models  # noqa: F401
 from app.modules.comunicacao import models as comunicacao_models  # noqa: F401

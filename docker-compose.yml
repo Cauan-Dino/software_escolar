@@ -28,8 +28,7 @@ services:
       CORS_ORIGINS: '["http://localhost:8080","http://localhost:5173"]'
       PAYMENT_GATEWAY: ${PAYMENT_GATEWAY:-fake}
       PAYMENT_WEBHOOK_SECRET: ${PAYMENT_WEBHOOK_SECRET:-dev-webhook-secret}
-      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
-      ANTHROPIC_MODEL: ${ANTHROPIC_MODEL:-claude-haiku-5-5}
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-COLE_AQUI_A_API_KEY_DE_TESTE_DA_DEEPSEEK}
       UPLOAD_DIR: /app/uploads
     depends_on:
       db:

@@ -34,7 +34,7 @@ flowchart LR
     WEB -- "HTTPS /api/v1 (JWT)" --> API
     EXT -- "POST /api/v1/financeiro/webhook (assinatura HMAC)" --> API
     RP --> DB[(PostgreSQL 16)]
-    S -- "somente back-end" --> LLM["API da Anthropic<br/>(assistente)"]
+    S -- "somente back-end" --> LLM["API da DeepSeek<br/>(assistente)"]
 ```
 
 **Regras inegociáveis**
@@ -102,7 +102,7 @@ apenas com um docstring explicando isso.
 | `notas` | Boletim simples (disciplina × bimestre) lançado pelo professor da turma. |
 | `portal` | Visão agregada do responsável sobre os filhos (sem tabelas próprias). |
 | `obrigacoes` | Calendário de obrigações legais/administrativas da escola. |
-| `assistente` | Chat com IA, com ferramentas somente leitura executadas com as permissões do usuário. |
+| `assistente` | Chat com IA (DeepSeek) com tool calling: ferramentas de leitura executam direto; toda ferramenta que altera dados vira uma ação pendente confirmada por botão. Roda com as permissões do usuário. Ver `docs/PLANO_ASSISTENTE_IA.md`. |
 
 ### Dependências permitidas entre módulos
 

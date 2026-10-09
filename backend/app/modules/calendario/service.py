@@ -42,6 +42,11 @@ def list_eventos(
     return [EventoCalendarioRead.model_validate(e) for e in eventos]
 
 
+def get_evento(db: Session, evento_id: int) -> EventoCalendarioRead:
+    """API pública: um evento por id (404 se não existir)."""
+    return EventoCalendarioRead.model_validate(_get_or_404(db, evento_id))
+
+
 def create_evento(
     db: Session, data: EventoCalendarioCreate, user: CurrentUser
 ) -> EventoCalendarioRead:

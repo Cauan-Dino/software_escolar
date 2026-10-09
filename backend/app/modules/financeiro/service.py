@@ -198,6 +198,11 @@ def gerar_mensalidades(db: Session, competencia: str) -> list[CobrancaRead]:
     return criadas
 
 
+def get_cobranca(db: Session, cobranca_id: int) -> CobrancaRead:
+    """API pública: uma cobrança por id (404 se não existir). Sem checagem de perfil."""
+    return _cobranca_read(_get_cobranca_or_404(db, cobranca_id))
+
+
 def list_cobrancas(
     db: Session,
     *,

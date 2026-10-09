@@ -10,6 +10,7 @@ from app.core import audit
 from app.core.config import settings
 from app.core.deps import DbSession
 from app.core.exceptions import register_exception_handlers
+from app.modules.assistente.router import router as assistente_router
 from app.modules.auth.router import router as auth_router
 from app.modules.calendario.router import router as calendario_router
 from app.modules.comunicacao.router import router as comunicacao_router
@@ -32,6 +33,7 @@ ROUTERS: list[APIRouter] = [
     financeiro_router,
     calendario_router,
     comunicacao_router,
+    assistente_router,
 ]
 
 

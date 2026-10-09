@@ -92,6 +92,14 @@ def upsert_nota(
     return _to_read(nota)
 
 
+def find_nota(
+    db: Session, aluno_id: int, turma_id: int, disciplina: str, periodo: Periodo
+) -> NotaRead | None:
+    """API pública: nota já lançada para aluno+turma+disciplina+período (ou None)."""
+    nota = repository.get_nota(db, aluno_id, turma_id, disciplina, periodo)
+    return _to_read(nota) if nota else None
+
+
 def _situacao(media: float | None) -> str:
     if media is None:
         return "SEM_NOTA"

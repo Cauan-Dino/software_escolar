@@ -50,10 +50,16 @@ class Settings(BaseSettings):
     inadimplencia_dias_tolerancia: int = 5
     inadimplencia_bloqueia: list[str] = ["REMATRICULA", "SERVICOS_EXTRAS"]
 
-    # Assistente de IA
-    anthropic_api_key: str | None = None
-    anthropic_model: str = "claude-haiku-5-5"
+    # Assistente de IA (DeepSeek, API compatível com OpenAI).
+    # Chave de TESTE hardcoded de propósito (projeto acadêmico); a variável de ambiente
+    # DEEPSEEK_API_KEY sobrescreve. Troque/revogue a chave se o repositório for público.
+    deepseek_api_key: str = "COLE_AQUI_A_API_KEY_DE_TESTE_DA_DEEPSEEK"
+    deepseek_base_url: str = "https://api.deepseek.com"
+    deepseek_model: str = "deepseek-chat"
+    deepseek_timeout_seconds: float = 45.0
     assistente_historico_max_mensagens: int = 20
+    assistente_max_passos: int = 5
+    assistente_acao_expira_minutos: int = 10
 
     @model_validator(mode="after")
     def _check_production_secrets(self) -> Self:

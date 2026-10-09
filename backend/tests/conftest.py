@@ -16,7 +16,7 @@ TEST_DATABASE_URL = os.environ.get(
 # Precisa acontecer antes de qualquer import de `app`, para nada apontar para o banco de dev.
 os.environ["DATABASE_URL"] = TEST_DATABASE_URL
 os.environ["ENVIRONMENT"] = "test"
-os.environ.pop("ANTHROPIC_API_KEY", None)
+os.environ.pop("DEEPSEEK_API_KEY", None)
 
 import pytest  # noqa: E402
 from alembic import command  # noqa: E402

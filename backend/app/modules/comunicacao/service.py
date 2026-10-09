@@ -115,6 +115,11 @@ def create_aviso(db: Session, data: AvisoCreate, user: CurrentUser) -> AvisoRead
     return _to_read(aviso, lido=False)
 
 
+def get_aviso(db: Session, aviso_id: int) -> AvisoRead:
+    """API pública: um aviso por id (404 se não existir), sem o estado de leitura."""
+    return _to_read(_get_or_404(db, aviso_id), lido=False)
+
+
 def update_aviso(db: Session, aviso_id: int, data: AvisoUpdate, user: CurrentUser) -> AvisoRead:
     aviso = _get_or_404(db, aviso_id)
     if not _pode_editar(user, aviso):
